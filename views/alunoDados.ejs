@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="principal.html">Principal</a></li>
+            <li><a href="principalProfessor.html">Professor</a></li>
+            <li><a href="principalCoordenador.html">Coordenador</a></li>
+            <li><a href="">Sobre</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Dados Cadastrais</h1>
+            <div>
+                <p><strong>Nome:</strong> <span id="Usuario_nome"><% usuario.Usuario_nome %></span></p>
+                <p><strong>CPF:</strong> <span id="Usuario_cpf"><% usuario.Usuario_cpf %></span></p>
+                <p><strong>Data de Nascimento:</strong> <span id="Usuario_data_nasc"><% usuario.Usuario_data_nasc %></span></p>
+                <p><strong>Endereço:</strong> <span id="Usuario_telefone"><% usuario.Usuario_telefone %></span></p>
+                <p><strong>Endereço:</strong> <span id="Usuario_endereco"><% usuario.Usuario_endereco %></span></p>
+                <p><strong>Endereço:</strong> <span id="Usuario_email"><% usuario.Usuario_email %></span></p>
+            </div>
+            <div>
+            <button type="submit" name="action" value="alterar">Alterar</button>
+            <a href="principalAluno.html">Voltar</a>  
+            </div>
+    </div>
+</body>
+
+</html>

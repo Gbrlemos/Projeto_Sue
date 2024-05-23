@@ -1,0 +1,55 @@
+app.get("/aluno", (req, res) => {
+	turma.findAll({
+		raw: true,
+		order: [
+			 ["id_Usuario", "DESC"],
+		],
+	}).then((aluno) => {
+		res.render("alunoDados", {
+			aluno:aluno,
+		});
+	});
+});
+
+
+app.post("/editar_aluno", async (req,res) => {
+	const {Usuario_nome, Usuario_cpf, Usuario_data_nasc, Usuario_telefone, Usuario_email, action } = req.body;
+	const id = req.params.id;
+	console.log(
+		id_Usuario,
+		Usuario_nome,
+		Usuario_cpf,
+		Usuario_data_nasc,
+		Usuario_telefone,
+		Usuario_email,
+		action,
+		id
+	);
+
+if (action === "alterar") {
+	try{
+		const{Usuario_nome, Usuario_cpf, Usuario_data_nasc, Usuario_telefone, Usuario_email } req.body;
+		const id = id_Usuario
+		const aluno = usuario.findByPk(id);
+		if (!usuario) {
+			return res.status(404).json({
+				error: `Aluno nao foi encontrado`
+			});
+		}
+		usuario.Usuario_nome = Usuario_nome;
+		usuario.Usuario_cpf = Usuario_cpf;
+		usuario.Usuario_data_nasc = Usuario_data_nasc;
+		usuario.Usuario_telefone = Usuario_telefone;
+		usuario.Usuario_email = Usuario_email;
+		await usuario.save();
+		res.status(201).redirect("/aluno");
+	} catch (error) {
+		console.error(
+			`Erro ao alterar dados do aluno`
+		);
+		res.status(500).json({
+			error: `Erro ao alterar dados do aluno`
+		});
+	}
+}
+});
