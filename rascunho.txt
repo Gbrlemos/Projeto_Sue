@@ -1,0 +1,4 @@
+CREATE VIEW view_curso_disciplina AS
+SELECT cd.curso_id_Curso, c.Curso_nome, cd.disciplina_id_Disciplina, d.Disciplina_nome
+FROM curso as c, disciplina as d, curso_has_disciplina as cd
+WHERE d.id_Disciplina = cd.disciplina_id_Disciplina and c.id_Curso = cd.curso_id_Curso;

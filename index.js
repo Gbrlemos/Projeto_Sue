@@ -54,6 +54,12 @@ connection
 */
 
 app.get("/disciplinas", (req, res) => {
+  res.render('/disciplinas');
+})
+
+module.exports = app;
+/*
+app.get("/disciplinas", (req, res) => {
     disciplina.findAll({
       raw: true,
       order: [
@@ -160,6 +166,8 @@ app.get("/disciplinas", (req, res) => {
         .json({ error: "Erro ao excluir dados da tabela de disciplina." });
     }
   }); 
+
+  */
 
 app.listen(port, () => {
         console.log(`O servidor foi iniciado com sucesso na porta http://127.0.0.1:${port}`);
