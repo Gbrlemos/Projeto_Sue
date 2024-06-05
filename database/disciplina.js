@@ -6,13 +6,13 @@ const connection = require("./database");
 const Disciplina = connection.define(
   "disciplina",
   {
-    id_Disciplina: {
+    id_disciplina: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    nome_Disciplina: {
+    nome_disciplina: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
@@ -20,7 +20,7 @@ const Disciplina = connection.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    descricao_Disciplina: {
+    descricao_disciplina: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
@@ -36,11 +36,10 @@ async function sincronizarDisciplina() {
     await Disciplina.sync({ force: false });
   } catch (error) {
     console.error("Erro ao sincronizar a tabela: ", error);
-  } 
-/*   finally {
+  } finally {
     await connection.close();
     console.log("Conexão fechada.");
-  } */
+  }
 }
 
 //Disciplina.sync({ force: false }).then(() => {});
@@ -48,8 +47,7 @@ async function sincronizarDisciplina() {
 module.exports = Disciplina;
 //module.exports = sincronizarDisciplina();
 
-
-//   module.exports = {
- //   Disciplina: Disciplina,
- //   sincronizarDisciplina: sincronizarDisciplina
- // };   
+/* module.exports = {
+    Disciplina: Disciplina,
+    sincronizarDisciplina: sincronizarDisciplina
+  }; */

@@ -1,55 +1,41 @@
+// models/Curso.js
+
 const { DataTypes } = require('sequelize');
-const connection = require('./connection'); // Importando a conexão de banco de dados existente
+const connection = require('../database/database'); // Importe o arquivo database.js onde está a instância do Sequelize
 
-// Definição da tabela Curso
-const Curso = connection.define(
-  'curso',
-  {
-    id_Curso: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    Curso_nome: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
-    },
-    Coordenador_id_Coordenador: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Coordenador,
-        key: 'id_Coordenador',
-      },
-    },
-    Curso_valor: {
-      type: DataTypes.DOUBLE,
-      allowNull: false,
-    },
+const Curso = connection.define('curso', {
+  id_curso: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   },
-  {
-    timestamps: true, // Adiciona createdAt e updatedAt
-    tableName: 'curso',
+  nome_curso: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  id_coordenador: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    // Supondo que você tenha uma tabela de Coordenador com o nome 'Coordenador'
+    references: {
+      model: 'coordenador',
+      key: 'id_coordenador'
+    }
   }
-);
+},
+  {
+    timestamps: true,
+    tableName: 'curso',
+  
+});
 
-// Função para sincronizar a tabela com o banco de dados
 async function sincronizarCurso() {
   try {
     await Curso.sync({ force: false });
+    console.log('Tabela Curso sincronizada com sucesso.')
   } catch (error) {
     console.error('Erro ao sincronizar a tabela Curso:', error);
   }
-  // Código comentado para fechar a conexão, caso necessário em um ambiente diferente
-  /* finally {
-    await connection.close();
-    console.log("Conexão fechada.");
-  } */
 }
 
-// Exportando a tabela Curso e a função de sincronização
-module.exports = {
-  Curso: Curso,
-  sincronizarCurso: sincronizarCurso,
-};
+module.exports = Curso;

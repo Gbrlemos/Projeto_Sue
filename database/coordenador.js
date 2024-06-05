@@ -1,28 +1,27 @@
 const { DataTypes } = require('sequelize');
-const connection = require('./connection'); // Importando a conexão de banco de dados existente
+const connection = require('./database'); // Importando a conexão de banco de dados existente
 
 // Definição da tabela Coordenador
-const Coordenador = connection.define(
-  'coordenador',
-  {
-    id_Coordenador: {
+const Coordenador = connection.define('coordenador',{
+    id_coordenador: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    coordenador_Matricula: {
+    nome_coordenador: {
+      type: DataTypes.STRING(150),
+      allowNull: false,
+    },
+    email_coordenador: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      
+    },
+    cel_coordenador: {
       type: DataTypes.STRING(11),
       allowNull: false,
-    },
-    id_usuario_coord_pk: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Usuario,
-        key: 'id_Usuario',
-      },
-    },
+    }
   },
   {
     timestamps: true, // Adiciona createdAt e updatedAt
@@ -37,15 +36,8 @@ async function sincronizarCoordenador() {
   } catch (error) {
     console.error('Erro ao sincronizar a tabela Coordenador:', error);
   }
-  // Código comentado para fechar a conexão, caso necessário em um ambiente diferente
-  /* finally {
-    await connection.close();
-    console.log("Conexão fechada.");
-  } */
 }
 
+sincronizarCoordenador();
 // Exportando a tabela Coordenador e a função de sincronização
-module.exports = {
-  Coordenador: Coordenador,
-  sincronizarCoordenador: sincronizarCoordenador,
-};
+module.exports = Coordenador;

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Coordenador</title>
+</head>
+<body>
+    <h1>Cadastrar Coordenador</h1>
+
+    <form action="/cad_coordenador" method="POST">
+        <label for="nome_coordenador">Nome do Coordenador</label>
+        <input type="text" id="nome_coordenador" name="nome_coordenador" required><br>
+        <label for="email_coordenador">Email: </label>
+        <input type="text" id="email_coordenador" name="email_coordenador" required><br>
+        <label for="cel_coordenador">Celular: </label>
+        <input type="text" id="cel_coordenador" name="cel_coordenador" required><br>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <h2>Lista de Coordenadores</h2>
+
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Cel</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% coordenador.forEach(coordenador => { %>
+                <tr>
+                    <td><%= coordenador.id_coordenador %></td>
+                    <td><%= coordenador.nome_coordenador %></td>
+                    <td><%= coordenador.email_coordenador %></td>
+                    <td><%= coordenador.cel_coordenador %></td>
+                    <td>
+                        <form action="/deletar_coordenador/<%= coordenador.id_coordenador %>" method="POST">
+                            <button type="submit">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>
