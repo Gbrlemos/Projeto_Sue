@@ -10,13 +10,14 @@
     <h1>Cadastrar Coordenador</h1>
 
     <form action="/cad_coordenador" method="POST">
+        <input type="hidden" id="id_coordenador" name="id_coordenador" value="<%= coordenador ? coordenador.id_coordenador : '' %>">
         <label for="nome_coordenador">Nome do Coordenador</label>
-        <input type="text" id="nome_coordenador" name="nome_coordenador" required><br>
+        <input type="text" id="nome_coordenador" name="nome_coordenador" value="<%= coordenador ? coordenador.nome_coordenador : '' %>" required><br>
         <label for="email_coordenador">Email: </label>
-        <input type="text" id="email_coordenador" name="email_coordenador" required><br>
+        <input type="text" id="email_coordenador" name="email_coordenador" value="<%= coordenador ? coordenador.email_coordenador : '' %>" required><br>
         <label for="cel_coordenador">Celular: </label>
-        <input type="text" id="cel_coordenador" name="cel_coordenador" required><br>
-        <button type="submit">Registrar</button>
+        <input type="text" id="cel_coordenador" name="cel_coordenador" value="<%= coordenador ? coordenador.cel_coordenador : '' %>" required><br>
+        <button type="submit"><%= coordenador ? 'Atualizar' : 'Cadastrar' %></button>
     </form>
 
     <h2>Lista de Coordenadores</h2>
@@ -33,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            <% coordenador.forEach(coordenador => { %>
+            <% coordenadores.forEach(coordenador => { %>
                 <tr>
                     <td><%= coordenador.id_coordenador %></td>
                     <td><%= coordenador.nome_coordenador %></td>
@@ -42,6 +43,12 @@
                     <td>
                         <form action="/deletar_coordenador/<%= coordenador.id_coordenador %>" method="POST">
                             <button type="submit">Deletar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/cad_coordenador" method="GET">
+                            <input type="hidden" name="id_coordenador" value="<%= coordenador.id_coordenador %>">
+                            <button type="submit">Alterar</button>
                         </form>
                     </td>
                 </tr>

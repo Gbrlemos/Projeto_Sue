@@ -20,27 +20,34 @@ connection
 const Curso = require("./database/Curso");
 const Coordenador = require('./database/Coordenador');
 
-//rotas coordenador
+//ROTAS COORDENADOR -- ROTAS COORDENADOR -- ROTAS COORDENADOR -- 
 app.get('/cad_coordenador', async (req, res) => {
-  try {
-    const coordenador = await Coordenador.findAll();
-    res.render('cad_coordenador', { coordenador });
+  const id_coordenador = req.query.id_coordenador;
+  try{
+    const coordenador = id_coordenador ? await Coordenador.findByPk(id_coordenador) : null;
+    const coordenadores = await Coordenador.findAll();
+    res.render('cad_coordenador', {coordenador, coordenadores});
   } catch (error) {
-    console.error('Erro ao carregar coordenadores', error);
-    res.status(500).send('Erro ao carregar coordenadores');
+    console.error('Erro ao encontrar coordenador', error);
+    res.status(500).send('Erro ao encontrar coordenador');
   }
 });
 
 
 app.post('/cad_coordenador', async (req, res) => {
-  const { nome_coordenador , email_coordenador , cel_coordenador } = req.body;
+  const { id_coordenador, nome_coordenador , email_coordenador , cel_coordenador } = req.body;
   try {
-    const novoCoordenador = await Coordenador.create ({
-      nome_coordenador,
-      email_coordenador,
-      cel_coordenador
-    });
-    console.log('Coordenador criado com sucesso:', novoCoordenador.toJSON());
+    if ( id_coordenador ) {
+     await Coordenador.update(
+        { nome_coordenador, email_coordenador, cel_coordenador},
+        {where : {id_coordenador} }
+      );
+      console.log('Coordenador atualizado com sucesso');
+    } else {
+      await Coordenador.create ({nome_coordenador, email_coordenador, cel_coordenador});
+      console.log('Coordenador criado com sucesso:');
+    }
+    
     res.redirect('cad_coordenador');
   } catch (error) {
     console.error('Erro ao cadastrar coordenador', error);
@@ -55,27 +62,26 @@ app.post('/deletar_coordenador/:id', async (req, res) =>{
     console.log('Coordenador deletado com sucesso');
     res.redirect('/cad_coordenador');
   } catch (error) {
-    console.error('Erro ao deletar coordenador', error);
+    console.error('Erro ao deletar coordenador', error);  
     res.status(500).send('Erro ao deletar coordenador');
   }
 });
 
 
 
-//rotas curso
+//ROTAS CURSO -- ROTAS CURSO -- ROTAS CURSO --
 
-app.get("/cad_curso", async (req,res) => {
-    
-
-    try {
-      const curso = await Curso.findAll();
-
-      res.render('cad_curso', { curso });
-    } catch(error) {
+app.get('/cad_curso', async (req, res) => {
+  const id_curso = req.query.id_curso;
+  try {
+    const curso = id_curso ? await Curso.findByPk(id_curso) : null;
+    const cursos = await Curso.findAll();
+    const coordenadores = await Coordenador.findAll();
+    res.render('/cad_curso', { curso, cursos, coordenadores });
+  } catch (error) {
       console.error('Erro ao carregar pagina de curso', error);
       res.status(500).send('Erro ao carregar pagina de curso');
-    }
-
+  }
 });
 
 app.post("/cad_curso", async (req,res) => {

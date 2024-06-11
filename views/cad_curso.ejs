@@ -10,10 +10,17 @@
 
   <!-- Formulário de cadastro de curso -->
   <form action="/cad_curso" method="POST">
+    <input type="hidden" name="id_curso" value="<%= curso ? curso.id_curso : '' %> ">
     <label for="nome_curso">Nome do Curso:</label>
-    <input type="text" id="nome_curso" name="nome_curso" required><br>
+    <input type="text" id="nome_curso" name="nome_curso" value="<%= curso ? curso.nome_curso : '' %>" required><br>
     <label for="id_coordenador">ID do Coordenador:</label>
-    <input type="number" id="id_coordenador" name="id_coordenador" required><br>
+    <select name="id_coordenador" id="id_coordenador" required>
+      <option value="">Selecione o Coordenador</option>
+      <%= coordenadores.forEach(coordenador => { %>
+        <option value="<%= coordenador.id_coordenador %>" <%= curso && curso.id_curso === coordenador.id_coordenador ? 'selected' : '' %>> <%= coordenador.nome_coordenador %> </option>
+      })
+
+    </select>
     <button type="submit">Cadastrar Curso</button>
   </form>
 
@@ -28,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <% curso.forEach(curso => { %>
+      <% cursos.forEach(curso => { %>
         <tr>
           <td><%= curso.id_curso %></td>
           <td><%= curso.nome_curso %></td>
